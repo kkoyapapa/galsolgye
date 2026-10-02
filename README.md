@@ -2,6 +2,12 @@
 
 갤럭시 컨설턴트들의 특별한 만남. 파스텔 핑크·크림·로즈 톤의 모바일 우선 정적 웹사이트입니다.
 
+공개 사이트: https://kkoyapapa.github.io/galsolgye/
+
+GitHub 저장소: https://github.com/kkoyapapa/galsolgye
+
+2026-10-02 GitHub Actions 첫 배포 성공 및 공개 페이지 PC·모바일 뷰포트 검수 완료. `main` 변경 시 자동 검증·배포됩니다.
+
 ## 현재 운영 상태
 
 **V1 체험 버전이며 실제 신청을 받지 않습니다.**
