@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import { readFile, access } from 'node:fs/promises';
+const html = await readFile('index.html', 'utf8');
+const js = await readFile('script.js', 'utf8');
+assert(html.includes('lang="ko"') && html.includes('charset="UTF-8"'), 'Korean language / encoding missing');
+assert(html.includes("connect-src 'none'") && html.includes("form-action 'none'"), 'Preview must fail closed');
+const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+assert.equal(new Set(ids).size, ids.length, 'Duplicate HTML IDs');
+for (const [,id] of html.matchAll(/href="#([^"\s]+)"/g)) assert(ids.includes(id), `Missing anchor ${id}`);
+for (const [,asset] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) if (!asset.includes(':')) await access(asset);
+assert(!/\b(localStorage|sessionStorage|fetch|XMLHttpRequest|sendBeacon)\b|document\.cookie/.test(js), 'Preview must not transmit or persist data');
+assert(html.includes('id="form-fields" disabled'), 'Form must be disabled until JS is available');
+console.log('PASS: UTF-8, unique IDs, all anchors/assets, fail-closed preview, no data transport/storage.');
